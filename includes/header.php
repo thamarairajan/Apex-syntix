@@ -14,6 +14,34 @@ session_start(); ?>
         <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
     <style>
         body { background-color: #0B0B0B; color: #E5E7EB; }
+        :root { --primary: #00d2ff; --bg: #121212; --card: #1e1e1e; }
+   /* body { background: var(--bg); font-family: 'Inter', sans-serif; } */
+
+.chat-container {
+    width: 380px; height: 500px;
+    background: var(--card);
+    border-radius: 15px;
+    display: flex; flex-direction: column;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    position: fixed; bottom: 20px; right: 20px;
+}
+
+.chat-header {
+    padding: 15px; background: rgba(255,255,255,0.05);
+    border-bottom: 1px solid #333; display: flex; align-items: center;
+}
+
+.status-dot { width: 8px; height: 8px; background: #00ff88; border-radius: 50%; margin-left: 10px; }
+
+.chat-box { flex: 1; padding: 15px; overflow-y: auto; color: white; }
+
+.message { margin-bottom: 15px; padding: 10px; border-radius: 10px; max-width: 80%; line-height: 1.4; }
+.bot { background: #333; align-self: flex-start; }
+.user { background: var(--primary); color: black; align-self: flex-end; margin-left: auto; }
+
+.chat-input-area { display: flex; padding: 15px; border-top: 1px solid #333; }
+input { flex: 1; background: #2a2a2a; border: none; padding: 10px; color: white; border-radius: 5px; outline: none; }
+button { background: var(--primary); border: none; padding: 10px 15px; margin-left: 10px; border-radius: 5px; cursor: pointer; font-weight: bold; }
         .neon-accent { color: #00F2FF; } 
     </style>
 </head>

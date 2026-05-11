@@ -1,54 +1,82 @@
 <?php
+// --- 1. THE BRAIN (Gemini Function) ---
 function callGemini($userInput) {
-    $apiKey = "AIzaSyCIUaH413y3HQU1ub23yxqnOqUzg12IsLw"; // Replace with your actual key
-// Change this:
-// $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" . $apiKey;
+    $apiKey = "AIzaSyDWYBf6BffCE-qVmsivEFN6hVcPLpgr01o"; 
+    $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" . $apiKey;
 
-// To this (Current Stable Version):
-$url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" . $apiKey;
-    $data = ["contents" => [["parts" => [["text" => $userInput]]]]];
+    // We add a "System Instruction" here to give your AI its name!
+    $data = [
+        "contents" => [[
+            "parts" => [["text" => "You are the Apex Syntax AI. Help the user with logic and code. User says: " . $userInput]]
+        ]]
+    ];
 
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Keep this false for local testing
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); 
 
     $response = curl_exec($ch);
-    
-    // Check for cURL errors
-    if (curl_errno($ch)) {
-        return 'cURL Error: ' . curl_error($ch);
-    }
-
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
 
-    $result = json_decode($response, true);
-
-    // If Google returns an error (like 400 or 403), show it!
     if ($httpCode !== 200) {
-        return "Google API Error ($httpCode): " . ($result['error']['message'] ?? 'Unknown Error');
+        $err = json_decode($response, true);
+        return "Error: " . ($err['error']['message'] ?? 'API Connection Failed');
     }
 
-    return $result['candidates'][0]['content']['parts'][0]['text'] ?? "No text found in response.";
+    $result = json_decode($response, true);
+    return $result['candidates'][0]['content']['parts'][0]['text'] ?? "I'm not sure how to answer that.";
 }
 
-// Temporary test line
-// --- Keep your callGemini function exactly as it is ---
-
-// Replace the test line with this:
+// --- 2. THE HANDLER (Communication) ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $input = json_decode(file_get_contents('php://input'), true);
-    $userText = $input['message'] ?? '';
+    // This looks for standard POST data sent by your JavaScript
+    $question = $_POST['message'] ?? null;
 
-    if (!empty($userText)) {
-        $aiResponse = callGemini($userText);
-        echo json_encode(['response' => $aiResponse]);
+    if ($question) {
+        $aiResponse = callGemini($question);
+        // Send back JUST the text so it displays nicely in your chat box
+        echo $aiResponse;
     } else {
-        echo json_encode(['response' => 'Please enter a message.']);
+        echo "Please enter a message.";
     }
     exit;
 }
-
 ?>
+
+<!-- --- 3. THE FRONTEND SCRIPT --- -->
+<script>
+async function sendMessage() {
+    const input = document.getElementById('user-input');
+    const chatBox = document.getElementById('chat-box');
+    const userMessage = input.value.trim();
+
+    if (!userMessage) return;
+
+    // Show User Message
+    chatBox.innerHTML += `<div class="message user"><b>You:</b> ${userMessage}</div>`;
+    input.value = '';
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    try {
+        // We use FormData to match the PHP $_POST expectation
+        const formData = new FormData();
+        formData.append('message', userMessage);
+
+        const response = await fetch('api.php', {
+            method: 'POST',
+            body: formData // This sends it as a standard POST request
+        });
+        
+        const data = await response.text();
+        
+        // Show AI Response
+        chatBox.innerHTML += `<div class="message bot"><b>Apex AI:</b> ${data}</div>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+    } catch (error) {
+        chatBox.innerHTML += `<div class="message bot">Error: Could not connect to server.</div>`;
+    }
+}
+</script>

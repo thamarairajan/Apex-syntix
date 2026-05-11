@@ -1,6 +1,6 @@
 <?php include('includes/header.php'); ?>
 <?php
-session_start();
+// session_start();
 if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
     header("Location: dashboard.php"); // Send them away if they are already logged in
     exit;

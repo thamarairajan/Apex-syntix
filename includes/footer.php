@@ -11,51 +11,61 @@
 
 
     <script>
-    const chatWindow = document.getElementById('chat-window');
-    const userInput = document.getElementById('user-input');
-    const sendBtn = document.getElementById('send-btn');
-
-    async function sendMessage() {
-        const message = userInput.value.trim();
-        if (!message) return;
-
-        // Append User Message to UI
-        appendMessage(message, 'user');
-        userInput.value = '';
-
-        // Add Loading Indicator
-        const loadingDiv = appendMessage('...', 'ai-loading');
-
-        try {
-            const response = await fetch('api.php', {
-                method: 'POST',
-                headers: { 'Content-Type: application/json' },
-                body: JSON.stringify({ message: message })
-            });
-
-            const data = await response.json();
-            loadingDiv.remove(); // Remove loading dots
-            appendMessage(data.response, 'ai');
-        } catch (error) {
-            loadingDiv.remove();
-            appendMessage("Error: Could not connect to the server.", 'ai');
-        }
+function toggleChat() {
+    const container = document.getElementById('chat-container');
+    // Using Tailwind's 'hidden' class to toggle
+    container.classList.toggle('hidden');
+    // Optional: Focus the input when opened
+    if (!container.classList.contains('hidden')) {
+        document.getElementById('user-input').focus();
     }
+}
 
-    function appendMessage(text, sender) {
-        const msgDiv = document.createElement('div');
-        msgDiv.className = sender === 'user' 
-            ? "bg-gray-800 text-white self-end p-3 rounded-lg max-w-[80%] text-sm"
-            : "bg-blue-50 text-blue-800 self-start p-3 rounded-lg max-w-[80%] text-sm";
+function handleKeyPress(event) {
+    if (event.key === 'Enter') {
+        sendMessage();
+    }
+}
+
+async function sendMessage() {
+    const input = document.getElementById('user-input');
+    const chatBox = document.getElementById('chat-box');
+    const userMessage = input.value.trim();
+
+    if (!userMessage) return;
+
+    // User Message (Tailwind Styled)
+    chatBox.innerHTML += `
+        <div class="self-end bg-sky-500 text-white p-3 rounded-2xl rounded-tr-none max-w-[85%] shadow-md">
+            ${userMessage}
+        </div>
+    `;
+    
+    input.value = '';
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    try {
+        const formData = new FormData();
+        formData.append('message', userMessage);
+
+        const response = await fetch('api.php', {
+            method: 'POST',
+            body: formData
+        });
         
-        msgDiv.innerText = text;
-        chatWindow.appendChild(msgDiv);
-        chatWindow.scrollTop = chatWindow.scrollHeight;
-        return msgDiv;
+        const data = await response.text();
+        
+        // AI Response (Tailwind Styled)
+        chatBox.innerHTML += `
+            <div class="self-start bg-zinc-800 text-zinc-200 p-3 rounded-2xl rounded-tl-none max-w-[85%] border border-zinc-700">
+                ${data}
+            </div>
+        `;
+        chatBox.scrollTop = chatBox.scrollHeight;
+    } catch (error) {
+        chatBox.innerHTML += `<div class="text-red-400 text-xs text-center">Connection lost...</div>`;
     }
-
-    sendBtn.addEventListener('click', sendMessage);
-    userInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendMessage(); });
+}
 </script>
 
 </body>

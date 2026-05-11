@@ -1,20 +1,28 @@
 <?php
-// Database connection
-include('config/db_config.php'); 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'vendor/autoload.php'; 
+include('config/db_config.php'); // Database connection
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $fullname = $_POST['fullname'];
-    $email    = $_POST['email'];
-    $pass     = $_POST['password'];
+    // 1. Get and Sanitize Input
+    $fullname  = htmlspecialchars($_POST['fullname']);
+    $email     = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+    $pass      = $_POST['password'];
     $conf_pass = $_POST['confirm_password'];
-    $role     = $_POST['role'];
+    $role      = $_POST['role'];
 
-    // 1. Basic Verification: Check if passwords match
-    if ($pass !== $conf_pass) {
-        die("Error: Passwords do not match. Please go back.");
+    // 2. Validations
+    if (empty($fullname) || empty($email) || empty($pass)) {
+        die("Error: Please fill in all required fields.");
     }
 
-    // 2. Check if Email Already Exists (Critical for UX)
+    if ($pass !== $conf_pass) {
+        die("Error: Passwords do not match.");
+    }
+
+    // 3. Check if Email Already Exists
     $checkEmail = $conn->prepare("SELECT email FROM users WHERE email = ?");
     $checkEmail->bind_param("s", $email);
     $checkEmail->execute();
@@ -25,21 +33,68 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     $checkEmail->close();
 
-    // 3. Security: Hash the password
+    // 4. Hash the password
     $hashed_password = password_hash($pass, PASSWORD_BCRYPT);
 
-    // 4. Prepare the SQL statement
+    // 5. Insert into Database
     $stmt = $conn->prepare("INSERT INTO users (fullname, email, password, role) VALUES (?, ?, ?, ?)");
     $stmt->bind_param("ssss", $fullname, $email, $hashed_password, $role);
 
     if ($stmt->execute()) {
+        // 6. Registration Success! Now send the Welcome Email
+        sendWelcomeEmail($email, $fullname);
+        
+        // 7. Redirect to login
         header("Location: login.php?signup=success");
-        exit(); // Always use exit after a header redirect
+        exit();
     } else {
         echo "Digital Error: " . $stmt->error;
     }
 
     $stmt->close();
     $conn->close();
+}
+
+// --- The Welcome Email Function ---
+function sendWelcomeEmail($userEmail, $userName) {
+    $mail = new PHPMailer(true);
+
+    try {
+        $mail->isSMTP();
+        $mail->Host       = 'smtp.gmail.com';
+        $mail->SMTPAuth   = true;
+        $mail->Username   = 'thamarairajanpandiyarajan@gmail.com'; 
+        $mail->Password   = 'etbp faqu mvdj tlec'; // USE APP PASSWORD
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port       = 587;
+
+        // $mail->setFrom('thamarairajanpandiyarajan@gmail.com', 'Apex Syntix');
+        $mail->addReplyTo('support@apexsyntix.com', 'Apex Syntix Support');
+        $mail->addAddress($userEmail, $userName);
+
+        $mail->isHTML(true);
+        $mail->Subject = 'Welcome to the Digital World of Apex Syntix';
+        
+        $mail->Body = "
+        <div style='background-color: #000; color: #fff; padding: 40px; font-family: Arial, sans-serif;'>
+            <div style='max-width: 600px; margin: auto; border: 1px solid #1a1a1a; padding: 20px; border-radius: 10px;'>
+                <h1 style='color: #06b6d4;'>Welcome, $userName!</h1>
+                <p style='color: #a1a1aa; font-size: 16px;'>
+                    Your Digital Identity has been successfully initialized in <strong>Apex Syntix</strong>.
+                </p>
+                <div style='margin-top: 30px; text-align: center;'>
+                    <a href='http://localhost/Apex/login.php' 
+                       style='background-color: #0891b2; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;'>
+                       Initialize Session
+                    </a>
+                </div>
+            </div>
+        </div>";
+
+        $mail->send();
+        return true;
+    } catch (Exception $e) {
+        return false; // Silently fail so user can still log in
+    }
 }
 ?>

@@ -1,5 +1,7 @@
 <?php include('includes/header.php'); ?>
 
+
+
 <main class="flex-grow flex items-center justify-center p-4">
     <!-- Centered Registration Card -->
     <div class="w-full max-w-lg bg-gray-900 border border-gray-800 p-8 rounded-lg shadow-2xl my-10">
