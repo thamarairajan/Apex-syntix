@@ -64,7 +64,7 @@ function sendWelcomeEmail($userEmail, $userName) {
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
         $mail->Username   = 'thamarairajanpandiyarajan@gmail.com'; 
-        $mail->Password   = 'etbp faqu mvdj tlec'; // USE APP PASSWORD
+        $mail->Password   = 'et'; // USE APP PASSWORD
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
 

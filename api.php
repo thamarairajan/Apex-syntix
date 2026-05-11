@@ -1,7 +1,7 @@
 <?php
 // --- 1. THE BRAIN (Gemini Function) ---
 function callGemini($userInput) {
-    $apiKey = "AIzaSyDWYBf6BffCE-qVmsivEFN6hVcPLpgr01o"; 
+    $apiKey = "AIz-qVmsivEFNLpgr01o"; 
     $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" . $apiKey;
 
     // We add a "System Instruction" here to give your AI its name!
