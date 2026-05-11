@@ -3,8 +3,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 require 'vendor/autoload.php'; 
-include('config/db_config.php'); // Database connection
-
+include('config/db_config.php'); 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // 1. Get and Sanitize Input
     $fullname  = htmlspecialchars($_POST['fullname']);
@@ -64,7 +63,7 @@ function sendWelcomeEmail($userEmail, $userName) {
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
         $mail->Username   = 'thamarairajanpandiyarajan@gmail.com'; 
-        $mail->Password   = 'et'; // USE APP PASSWORD
+        $mail->Password   = $_ENV['SMTP_PASS']; // USE APP PASSWORD
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
 
@@ -94,7 +93,7 @@ function sendWelcomeEmail($userEmail, $userName) {
         $mail->send();
         return true;
     } catch (Exception $e) {
-        return false; // Silently fail so user can still log in
+        return false;
     }
 }
 ?>

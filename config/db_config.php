@@ -1,11 +1,23 @@
 <?php
 // Apex Syntix Database Configuration
 // Standard settings for a local XAMPP/WAMP environment
+require_once dirname(__DIR__) . '/vendor/autoload.php';
 
-$host = "localhost";
-$db_user = "root";      // Default for local development
+use Dotenv\Dotenv;
+
+// Check if the file exists to avoid more errors
+if (file_exists(dirname(__DIR__) . '/.env')) {
+    $dotenv = Dotenv::createImmutable(dirname(__DIR__));
+    $dotenv->load();
+} else {
+    die("Digital Error: .env file missing in the root directory.");
+}
+
+
+$host = $_ENV['DB_HOST'];
+$db_user = $_ENV['DB_USER'];      // Default for local development
 $db_pass = "";          // Default for local development
-$db_name = "apex_syntix_db";
+$db_name = $_ENV['DB_NAME'];
 
 // Create connection using MySQLi
 $conn = new mysqli($host, $db_user, $db_pass, $db_name);
