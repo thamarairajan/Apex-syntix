@@ -1,48 +1,16 @@
 <?php include('includes/header.php'); ?>
 
-<!-- <main class="container mx-auto px-6 py-12">
-    <div class="mb-12">
-        <h2 class="text-4xl font-bold neon-accent mb-4">Logic Lab</h2>
-        <p class="text-gray-400">Master the fundamental algorithms that power the digital world.</p>
+
+<nav class="bg-gray-900 border-b border-gray-800 px-6 py-4">
+    <div class="max-w-7xl mx-auto">
+        <a href="index.php" class="text-blue-400 hover:text-blue-300 transition flex items-center gap-2">
+            <span>←</span> Back
+        </a>
     </div>
+</nav>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-
-        <div class="lg:col-span-1 space-y-4">
-            <div class="bg-gray-900 p-6 rounded-xl border-l-4 border-cyan-500">
-                <span class="text-xs text-cyan-400 uppercase tracking-widest">Level 1</span>
-                <h4 class="text-xl font-bold mt-1">Array Reversal Logic</h4>
-                <p class="text-sm text-gray-500 mt-2">Learn to manipulate data structures without built-in functions.</p>
-            </div>
-            <div class="bg-gray-900 p-6 rounded-xl border-l-4 border-gray-700 hover:border-cyan-500 transition cursor-pointer">
-                <span class="text-xs text-gray-500 uppercase tracking-widest">Level 2</span>
-                <h4 class="text-xl font-bold mt-1">Prime Search Algorithm</h4>
-                <p class="text-sm text-gray-500 mt-2">Efficiently identifying prime numbers in a dataset.</p>
-            </div>
-        </div>
-
-
-        <div class="lg:col-span-2 bg-black border border-gray-800 rounded-xl p-6">
-            <div class="flex justify-between items-center mb-4">
-                <span class="text-sm font-mono text-gray-400">syntix_engine.php</span>
-                <button class="bg-cyan-600 text-xs px-4 py-2 rounded">Run Logic</button>
-            </div>
-            <div class="bg-gray-900 font-mono p-4 rounded text-cyan-300 min-h-[300px]">
-                <p>// Solve the logic here</p>
-                <p>function reverseArray($data) {</p>
-                <p class="animate-pulse">_</p>
-                <p>}</p>
-            </div>
-        </div>
-    </div>
-
-
-  
-
-
-</main> -->
-
-<main class="container mx-auto px-6 py-12">
+<main class="min-h-screen bg-gray-900 py-12 px-6">
+    <div class="max-w-7xl mx-auto">
     <!-- Header Section -->
     <div class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
@@ -254,6 +222,7 @@
             </div>
         </div>
     </div>
+</div>
 </main>
 
 <?php include('includes/footer.php'); ?>

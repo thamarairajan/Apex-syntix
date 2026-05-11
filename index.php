@@ -33,7 +33,7 @@
                 </div>
                 <h3 class="text-2xl font-bold mb-4">Logic Lab</h3>
                 <p class="text-gray-400 mb-6">Master algorithmic puzzles and logic-based problem solving designed for beginners and pros alike.</p>
-                <a href="#" class="text-cyan-400 font-semibold hover:underline">Access Engine &rarr;</a>
+                <a href="logic-lab.php" class="text-cyan-400 font-semibold hover:underline">Access Engine &rarr;</a>
             </div>
 
             <!-- Component Library (Based on your Tailwind/Bootstrap skills) -->
@@ -43,7 +43,7 @@
                 </div>
                 <h3 class="text-2xl font-bold mb-4">Syntix UI</h3>
                 <p class="text-gray-400 mb-6">A library of responsive, high-performance UI components built with Tailwind CSS and clean code.</p>
-                <a href="#" class="text-cyan-400 font-semibold hover:underline">Browse Library &rarr;</a>
+                <a href="library.php" class="text-cyan-400 font-semibold hover:underline">Browse Library &rarr;</a>
             </div>
 
             <!-- YouTube Hub (ObsidianApexPrime integration) -->
@@ -60,35 +60,38 @@
     </div>
 </section>
 
-<!-- Stats / Credibility Section -->
-<!-- <section class="py-20 border-t border-gray-900">
-    <div class="container mx-auto px-6 text-center">
-        <h4 class="text-gray-500 uppercase tracking-widest text-sm mb-12">Built on Expertise</h4>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+<!-- Blog Section -->
+<section class="bg-gray-900 py-20 px-6">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex justify-between items-end mb-12">
             <div>
-                <p class="text-3xl font-bold neon-accent">2.5+</p>
-                <p class="text-gray-500">Years Experience</p>
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Latest Insights</h2>
+                <p class="text-gray-400">Tutorials, development tips, and thoughts on the future of web tech.</p>
             </div>
-            <div>
-                <p class="text-3xl font-bold neon-accent">Full Stack</p>
-                <p class="text-gray-500">Architecture</p>
-            </div>
-            <div>
-                <p class="text-3xl font-bold neon-accent">Clean</p>
-                <p class="text-gray-500">Code Standards</p>
-            </div>
-            <div>
-                <p class="text-3xl font-bold neon-accent">Global</p>
-                <p class="text-gray-500">Vision</p>
-            </div>
+            <a href="blog.php" class="hidden md:block text-blue-500 hover:text-blue-400 font-medium">View all posts →</a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Blog Card 1 -->
+            <article class="bg-gray-800 border border-gray-700 rounded-2xl overflow-hidden hover:border-blue-500/50 transition-all group">
+                <div class="h-48 bg-gray-700 overflow-hidden">
+                    <!-- Placeholder for Blog Image -->
+                    <div class="w-full h-full bg-gradient-to-br from-blue-600/20 to-purple-600/20 flex items-center justify-center">
+                        <span class="text-blue-500 font-bold uppercase tracking-widest text-xs">PHP & MySQL</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <span class="text-xs text-blue-400 font-semibold uppercase">May 10, 2026</span>
+                    <h3 class="text-xl font-bold text-white mt-2 mb-3 group-hover:text-blue-400 transition">How to handle .env security in production</h3>
+                    <p class="text-gray-400 text-sm line-clamp-3">In this post, we explore why you should never push your credentials to GitHub and how to manage them on InfinityFree...</p>
+                    <a href="blog-single.php?id=1" class="inline-block mt-4 text-sm font-bold text-white hover:underline">Read More</a>
+                </div>
+            </article>
+
+            <!-- Repeat for Card 2 & 3 -->
         </div>
     </div>
-</section> -->
-<!-- ai  -->
- <!-- Floating Chat Trigger -->
-<!-- <div id="chat-circle" class="chat-circle" onclick="toggleChat()">
-    <img src="https://cdn-icons-png.flaticon.com/512/8149/8149171.png" alt="AI Icon" width="30">
-</div> -->
+</section>
 
 <!-- The Actual Chat Window (Hidden by default) -->
 <div id="chat-circle" 

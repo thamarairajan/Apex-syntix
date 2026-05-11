@@ -64,7 +64,7 @@ button { background: var(--primary); border: none; padding: 10px 15px; margin-le
             <nav class="hidden md:flex space-x-6 text-sm font-medium text-gray-400">
                 <a href="index.php" class="hover:text-cyan-400 transition">Home</a>
                 <a href="dashboard.php" class="hover:text-cyan-400 transition">Dashboard</a>
-                <a href="logic-lab.php" class="hover:text-cyan-400 transition">Logic Lab</a>
+                <!-- <a href="logic-lab.php" class="hover:text-cyan-400 transition">Logic Lab</a> -->
             </nav>
 
             <div class="flex items-center space-x-4 border-l border-gray-800 pl-6">

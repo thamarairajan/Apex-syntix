@@ -65,6 +65,11 @@ async function sendMessage() {
     } catch (error) {
         chatBox.innerHTML += `<div class="text-red-400 text-xs text-center">Connection lost...</div>`;
     }
+
+    // Smooth scroll to top on page load if pagination was used
+    if (window.location.search.includes('page=')) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 }
 </script>
 
