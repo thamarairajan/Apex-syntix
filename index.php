@@ -53,7 +53,7 @@
                 </div>
                 <h3 class="text-2xl font-bold mb-4">Video Feed</h3>
                 <p class="text-gray-400 mb-6">Direct access to the ObsidianApexPrime channel for live coding tutorials and tech insights.</p>
-                <a href="https://youtube.com/@ObsidianApexPrime" class="text-cyan-400 font-semibold hover:underline">Watch Tutorials &rarr;</a>
+                <a href="tutorials.php" class="text-cyan-400 font-semibold hover:underline">Watch Tutorials &rarr;</a>
             </div>
 
         </div>
