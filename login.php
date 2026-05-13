@@ -1,11 +1,12 @@
-<?php include('includes/header.php'); ?>
 <?php
-// session_start();
+// include 'config/session.php';
 if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
-    header("Location: dashboard.php"); // Send them away if they are already logged in
+    header("Location: dashboard.php");
     exit;
 }
 ?>
+<?php include('includes/header.php'); ?>
+<?php include('login_process.php') ?>
 <main class="flex-grow flex items-center justify-center p-4">
     <div class="w-full max-auto max-w-md bg-gray-900 border border-gray-800 p-8 rounded-lg shadow-2xl">
         <h2 class="text-3xl font-semibold mb-6 text-center">Login to <span class="neon-accent">Core</span></h2>

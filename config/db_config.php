@@ -30,6 +30,4 @@ if ($conn->connect_error) {
 
 // Set charset to utf8mb4 for better compatibility (emojis, special characters)
 $conn->set_charset("utf8mb4");
-
-// Now $conn is ready to be used in your logic files
 ?>

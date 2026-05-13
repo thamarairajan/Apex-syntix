@@ -1,6 +1,18 @@
-<?php include('includes/header.php'); ?>
+<?php 
+// include 'config/session.php';
+include('includes/header.php'); 
 
+// 2. Perform the logic check BEFORE any HTML is included
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+    header("Location: login.php");
+    exit(); // Always exit after a redirect
+}
 
+include 'config/db_config.php';
+$blog_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+
+// 3. NOW it is safe to include the header/HTML
+?>
 <nav class="bg-gray-900 border-b border-gray-800 px-6 py-4">
     <div class="max-w-7xl mx-auto">
         <a href="index.php" class="text-blue-400 hover:text-blue-300 transition flex items-center gap-2">
